@@ -1,0 +1,11 @@
+nombre del clientes,nombre del producto,Cantidad,precio unitario,total de ventas
+Carlos Pérez    ,Computadora,1,1200,1200
+Ana López       ,Mouse      ,2,25,50
+José            ,Teclado    ,1,30,30
+María Gómez     ,Monitor    ,1,150,150
+Juan Torres     ,Impresora  ,1,50,50
+Lucía Herrera   ,Cámara     ,3,20,60
+Pedro Sánchez   ,USB        ,1,200,200
+Sofía Ramírez   ,Disco Duro ,1,80,80
+Ricardo Castillo,Altavoz    ,1,250,250
+Elena Vargas    ,Cargador   ,2,40,80

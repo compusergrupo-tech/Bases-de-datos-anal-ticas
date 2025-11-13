@@ -1,0 +1,17 @@
+id_venta,producto,categoria,region,mes,trimestre,anio,ventas,cantidad
+1,Carrito,Miniaturas,Norte,Enero,1,2023,150,10
+2,Muñeca,Juguetes,Sur,Enero,1,2023,200,8
+3,Carrito,Miniaturas,Sur,Febrero,1,2023,100,5
+4,Juego,Mesa,Norte,Febrero,1,2023,180,6
+5,Muñeca,Juguetes,Norte,Marzo,1,2023,220,11
+6,Carrito,Miniaturas,Sur,Marzo,1,2023,250,12
+7,Juego,Mesa,Norte,Abril,2,2023,300,15
+8,Muñeca,Juguetes,Sur,Mayo,2,2023,240,9
+9,Carrito,Miniaturas,Norte,Mayo,2,2023,170,7
+10,Juego,Mesa,Sur,Junio,2,2023,320,16
+11,Carrito,Miniaturas,Norte,Julio,3,2023,210,10
+12,Muñeca,Juguetes,Sur,Agosto,3,2023,260,13
+13,Juego,Mesa,Norte,Septiembre,3,2023,350,14
+14,Carrito,Miniaturas,Sur,Octubre,4,2023,280,14
+15,Muñeca,Juguetes,Norte,Noviembre,4,2023,310,15
+16,Juego,Mesa,Sur,Diciembre,4,2023,380,19

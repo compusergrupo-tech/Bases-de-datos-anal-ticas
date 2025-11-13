@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos por Categoría</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f4f6f8;
+        }
+        #graficoProductos {
+            max-width: 900px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="graficoProductos"></canvas>
+
+<script>
+fetch('consulta1.csv')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('No se pudo cargar el archivo CSV. Asegúrate de que "consulta1.csv" esté en la misma carpeta.');
+    }
+    return response.text();
+  })
+  .then(csv => {
+    // Procesar CSV
+    const rows = csv.trim().split('\n');
+    const categoriaProductos = {};
+
+    for (let i = 1; i < rows.length; i++) {
+      const cols = rows[i].split(',');
+      if (cols.length < 3) continue;
+      const nombre = cols[1].trim();
+      const categoria = cols[2].trim();
+
+      // Contar productos por categoría
+      if (!categoriaProductos[categoria]) categoriaProductos[categoria] = [];
+      categoriaProductos[categoria].push(nombre);
+    }
+
+    // Preparar datos para Chart.js
+    const labels = Object.keys(categoriaProductos);
+    const data = labels.map(cat => categoriaProductos[cat].length);
+
+    // Crear gráfico
+    new Chart(document.getElementById('graficoProductos'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Cantidad de productos',
+          data: data,
+          backgroundColor: ['#42a5f5', '#66bb6a', '#ffa726']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Productos por Categoría',
+            font: { size: 18 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const categoria = context.label;
+                const productos = categoriaProductos[categoria];
+                return productos.map(p => `• ${p}`);
+              }
+            }
+          },
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
+  })
+  .catch(error => {
+    console.error('Error al cargar o procesar el CSV:', error);
+    document.body.innerHTML = `<p style="color: red; font-size: 18px; text-align: center;">${error.message}</p>`;
+  });
+</script>
+
+</body>
+</html>

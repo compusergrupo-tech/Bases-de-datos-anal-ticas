@@ -1,0 +1,11 @@
+fecha, producto,region,cantidad,precio_unitario 
+2024-01-15,Producto A,Norte, 50,25.50 
+2024-01-15,Producto B,Sur, 30,18.75 
+2024-01-16,Producto A, Este, 45,25.50 
+2024-01-16,Producto C,Oeste, 20,32.00 
+2024-01-17,Producto B,Norte, 35,18.75 
+2024-01-17,Producto A,Sur, 60,25.50 
+2024-01-18,Producto C,Este, 25,32.00 
+2024-01-18,Producto B, Oeste, 40,18.75 
+2024-01-19,Producto A, Norte,55,25.50 
+2024-01-19,Producto C,Sur,30,32.00

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos en la categoría Hardware</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .contenedor {
+      background: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #42a5f5;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin: 6px 0;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>Productos en la categoría "Hardware"</h1>
+  <ul id="listaProductos"></ul>
+</div>
+
+<script>
+fetch('consulta2.csv')
+  .then(res => res.text())
+  .then(csv => {
+    const filas = csv.trim().split('\n').slice(1); // Omitir cabecera
+    const lista = document.getElementById('listaProductos');
+
+    filas.forEach(fila => {
+      const cols = fila.split(',');
+      const nombre = cols[1]?.trim();
+      const categoria = cols[2]?.trim();
+      if (categoria === 'Hardware') {
+        const li = document.createElement('li');
+        li.textContent = nombre;
+        lista.appendChild(li);
+      }
+    });
+  })
+  .catch(err => {
+    document.body.innerHTML = `<p style="color:red; font-size:18px; text-align:center;">Error: ${err.message}</p>`;
+  });
+</script>
+
+</body>
+</html>

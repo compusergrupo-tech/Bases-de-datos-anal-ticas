@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiendas por Ciudad</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f4f6f8;
+        }
+        #grafico {
+            max-width: 900px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="grafico"></canvas>
+
+<script>
+fetch('consulta7.csv')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('No se pudo cargar el archivo CSV. Verifica que "consulta7.csv" esté en la misma carpeta que este HTML.');
+    }
+    return response.text();
+  })
+  .then(csv => {
+    // Procesar CSV
+    const rows = csv.trim().split('\n');
+    const cityStores = {};
+
+    for (let i = 1; i < rows.length; i++) {
+      const cols = rows[i].split(',');
+      if (cols.length < 2) continue;
+      const city = cols[0].trim();
+      const store = cols[1].trim();
+      if (!cityStores[city]) cityStores[city] = [];
+      cityStores[city].push(store);
+    }
+
+    // Crear labels y datos (conteo de tiendas)
+    const labels = Object.keys(cityStores);
+    const data = labels.map(city => cityStores[city].length);
+
+    // Crear el gráfico
+    new Chart(document.getElementById('grafico'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Cantidad de tiendas',
+          data: data,
+          backgroundColor: '#42a5f5'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Tiendas por Ciudad',
+            font: { size: 18 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const city = context.label;
+                const tiendas = cityStores[city];
+                return tiendas.map(t => `• ${t}`);
+              }
+            }
+          },
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
+  })
+  .catch(error => {
+    console.error('Error al cargar o procesar el CSV:', error);
+    document.body.innerHTML = `<p style="color: red; font-size: 18px; text-align: center;">${error.message}</p>`;
+  });
+</script>
+
+</body>
+</html>

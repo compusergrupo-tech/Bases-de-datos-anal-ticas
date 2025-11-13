@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos por Nombre y Categoría</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f4f6f8;
+        }
+        #graficoProductos {
+            max-width: 900px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="graficoProductos"></canvas>
+
+<script>
+fetch('consulta4.csv') // Cambia el nombre si tu CSV se llama diferente
+  .then(res => {
+    if (!res.ok) throw new Error('No se pudo cargar el archivo CSV. Verifica que esté en la misma carpeta.');
+    return res.text();
+  })
+  .then(csv => {
+    const filas = csv.trim().split('\n').slice(1); // Omitir encabezado
+    const productos = [];
+    const categorias = [];
+
+    filas.forEach(fila => {
+      const cols = fila.split(',');
+      const nombre = cols[1]?.trim();
+      const categoria = cols[2]?.trim();
+      if (nombre && categoria) {
+        productos.push(nombre);
+        categorias.push(categoria);
+      }
+    });
+
+    // Asignar colores por categoría
+    const colorMap = {
+      'Hardware': '#42a5f5',
+      'Electronics': '#66bb6a',
+      'Accessories': '#ffa726'
+    };
+    const colores = categorias.map(c => colorMap[c] || '#888');
+
+    new Chart(document.getElementById('graficoProductos'), {
+      type: 'bar',
+      data: {
+        labels: productos,
+        datasets: [{
+          label: 'Producto',
+          data: productos.map(() => 1), // Valor fijo solo para visualizar
+          backgroundColor: colores
+        }]
+      },
+      options: {
+        indexAxis: 'y', // gráfico horizontal para nombres largos
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Productos por Nombre (con Categoría)',
+            font: { size: 18 }
+          },
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const idx = context.dataIndex;
+                return `Categoría: ${categorias[idx]}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { display: false },
+          y: { ticks: { font: { size: 14 } } }
+        }
+      }
+    });
+  })
+  .catch(err => {
+    console.error(err);
+    document.body.innerHTML = `<p style="color:red; font-size:18px; text-align:center;">Error: ${err.message}</p>`;
+  });
+</script>
+
+</body>
+</html>

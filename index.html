@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Datos y BI</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+Pro:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Aplicar las fuentes personalizadas */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Source Serif Pro', serif;
+        }
+        .bg-data-analysis {
+            background-image: url('https://images.unsplash.com/photo-1587440871875-bc1923764e6e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 0;
+        }
+        .bg-data-analysis::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.3), rgba(107, 114, 128, 0.3)); /* Subtle blue-gray gradient */
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header y Navegación -->
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600 font-serif">Proyecto BI</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#pentaho" class="text-gray-600 hover:text-blue-600 transition-colors">Pentaho y BBDD</a>
+                <a href="#ejercicios" class="text-gray-600 hover:text-blue-600 transition-colors">Ejercicios</a>
+                <a href="#graficos" class="text-gray-600 hover:text-blue-600 transition-colors">Gráficos</a>
+                <a href="#equipo" class="text-gray-600 hover:text-blue-600 transition-colors">Equipo</a>
+                <a href="#anexos" class="text-gray-600 hover:text-blue-600 transition-colors">Anexos</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 text-2xl" aria-label="Abrir menú">
+                ☰
+            </button>
+        </nav>
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="#pentaho" class="block py-3 px-6 text-sm hover:bg-gray-100">Pentaho y BBDD</a>
+            <a href="#ejercicios" class="block py-3 px-6 text-sm hover:bg-gray-100">Ejercicios</a>
+            <a href="#graficos" class="block py-3 px-6 text-sm hover:bg-gray-100">Gráficos</a>
+            <a href="#equipo" class="block py-3 px-6 text-sm hover:bg-gray-100">Equipo</a>
+            <a href="#anexos" class="block py-3 px-6 text-sm hover:bg-gray-100">Anexos</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative text-center py-20 bg-gray-900 overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif');">
+                <div class="absolute inset-0 bg-gray-900 opacity-70"></div> <!-- Dark overlay for text readability -->
+            </div>
+            <div class="relative container mx-auto px-6 text-white z-10">
+                <h1 class="text-4xl md:text-5xl font-bold">Plataforma de informacion evaluativa</h1>
+                <p class="mt-4 text-lg max-w-2xl mx-auto">Un recorrido por el análisis de datos, desde la integración con Pentaho hasta la visualización de resultados.</p>
+            </div>
+        </section>
+
+        <!-- 1. PENTAHO Y BASES DE DATOS ANALITICAS -->
+        <section id="pentaho" class="py-20 bg-data-analysis">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Pentaho y Bases de Datos Analíticas</h2>
+                    <p class="mt-3 text-gray-600 max-w-3xl mx-auto">Un vistazo general a la integración de datos y la creación de cubos OLAP para el análisis multidimensional.</p>
+                </div>
+
+                <!-- Descripción General -->
+                <div class="bg-white p-8 rounded-lg shadow-lg mb-12">
+                    <h3 class="text-2xl font-bold mb-4">Pentaho como Herramienta de Business Intelligence</h3>
+                    <p class="text-gray-700 mb-4">Pentaho es una suite de inteligencia de negocios (BI) de código abierto que ofrece una plataforma completa para el análisis de datos. Su fortaleza radica en su capacidad para cubrir todo el ciclo de vida del BI, desde la integración de datos (ETL) hasta la creación de informes, dashboards interactivos y análisis predictivo.</p>
+                    <p class="text-gray-700">Para el desarrollo de análisis, Pentaho permite a los usuarios conectarse a una multitud de fuentes de datos, procesar y combinar esta información, y finalmente presentarla de una manera que facilite la toma de decisiones estratégicas. Su componente <span class="font-semibold text-blue-600">Pentaho Data Integration (PDI)</span> es fundamental para construir flujos de datos robustos y automatizados.</p>
+                </div>
+
+                <!-- Cubos OLAP -->
+                <div class="grid lg:grid-cols-5 gap-12 items-start mb-12">
+                    <div class="lg:col-span-3">
+                        <h3 class="text-2xl font-bold mb-4">Introducción a los Cubos OLAP con Pentaho</h3>
+                        <p class="text-gray-700 mb-6">Una de las capacidades más potentes de Pentaho es la creación de cubos OLAP (Procesamiento Analítico en Línea). Un cubo OLAP es una estructura de datos multidimensional que permite un análisis rápido y complejo desde diferentes perspectivas.</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Conceptos Fundamentales</h4>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <li><span class="font-semibold">Dimensiones:</span> Son las perspectivas de análisis (ej. Tiempo, Geografía, Productos).</li>
+                                    <li><span class="font-semibold">Jerarquías:</span> Organizan los niveles dentro de una dimensión (ej. Año > Trimestre > Mes).</li>
+                                    <li><span class="font-semibold">Medidas:</span> Son los valores numéricos que se analizan (ej. Ventas, Unidades, Beneficio).</li>
+                                    <li><span class="font-semibold">Hechos (Facts):</span> Son los eventos de negocio que contienen las medidas.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Integración y Operaciones</h4>
+                                <p class="text-gray-700">El cubo se integra con una base de datos analítica (usualmente en un esquema de estrella o copo de nieve). Las operaciones principales sobre un cubo OLAP incluyen <span class="font-semibold">Drill-down</span> (ver más detalle), <span class="font-semibold">Roll-up</span> (agregar datos), <span class="font-semibold">Slice</span> (filtrar por una dimensión) y <span class="font-semibold">Dice</span> (seleccionar un subconjunto del cubo).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <h4 class="text-xl font-semibold mb-3">Pasos para la Creación del Cubo</h4>
+                        <ol class="list-decimal list-inside space-y-3 text-gray-800">
+                            <li><span class="font-semibold">Definir el Modelo de Negocio:</span> Identificar dimensiones y medidas clave.</li>
+                            <li><span class="font-semibold">Crear la Conexión a la Base de Datos:</span> Configurar el acceso al Data Warehouse.</li>
+                            <li><span class="font-semibold">Diseñar el Esquema en Pentaho Schema Workbench:</span> Crear el archivo XML que define el cubo.</li>
+                            <li><span class="font-semibold">Publicar el Esquema:</span> Subir el archivo al servidor de Pentaho.</li>
+                            <li><span class="font-semibold">Analizar el Cubo:</span> Utilizar herramientas como Pentaho Analyzer para explorar los datos de forma interactiva.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Flujos de Datos -->
+                <div>
+                     <h3 class="text-2xl font-bold mb-4">Flujos de Datos y Procesamiento en Pentaho (ETL)</h3>
+                     <p class="text-gray-700 mb-4">El corazón del procesamiento de datos en Pentaho es <span class="font-semibold text-blue-600">Pentaho Data Integration (PDI)</span>. PDI utiliza dos tipos de componentes:</p>
+                     <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h4 class="font-semibold text-lg mb-2">Transformaciones (.ktr)</h4>
+                            <p class="text-gray-600">Se encargan del flujo de datos a nivel de fila. Definen cómo se extraen, limpian, transforman y enriquecen los datos. Las transformaciones se ejecutan en paralelo para un rendimiento óptimo.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h4 class="font-semibold text-lg mb-2">Trabajos (.kjb)</h4>
+                            <p class="text-gray-600">Orquestan el proceso general. Un trabajo puede ejecutar varias transformaciones en secuencia, manejar la lógica de control (ej. condicionales, bucles), enviar notificaciones y gestionar errores.</p>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+                <!-- 2. EJERCICIOS REALIZADOS -->
+
+                <section id="ejercicios" class="py-20 bg-white">
+
+                    <div class="container mx-auto px-6">
+
+                        <div class="text-center mb-12">
+
+                            <h2 class="text-3xl md:text-4xl font-bold">Ejercicios Realizados</h2>
+
+                            <p class="mt-3 text-gray-600">Casos prácticos de integración y análisis de datos.</p>
+
+                        </div>
+
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                            <!-- Ejercicio 1: Procesamiento de Datos de Clientes (P1) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Procesamiento de Datos de Clientes" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 1: Procesamiento de Datos de Clientes</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio demuestra un flujo ETL básico utilizando Pentaho Data Integration (PDI) para procesar datos de clientes.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Lee datos de clientes desde un archivo CSV (`datos.csv`).</li>
+
+                                            <li>Filtra los registros donde la 'cantidad' es mayor a 100.</li>
+
+                                            <li>Calcula un impuesto del 15% sobre la 'cantidad'.</li>
+
+                                            <li>Guarda los datos procesados en un nuevo archivo CSV (`final.csv`).</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `Trabajo.kjb` en PDI y ejecuta el Job.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 2: Consolidación de Datos de Ventas (P2) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Consolidación de Datos de Ventas" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 2: Consolidación de Datos de Ventas</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio implementa un proceso ETL para consolidar datos de ventas a partir de múltiples fuentes de datos.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Lee datos desde tres archivos CSV: `clientes.csv`, `productos.csv` y `ventas.csv`.</li>
+
+                                            <li>Realiza una unión (Merge Join) para combinar los datos.</li>
+
+                                            <li>Guarda el resultado consolidado en un archivo de texto (`Salida.txt`).</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `proceso.ktr` en PDI y ejecuta la transformación.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 3: Operaciones OLAP con Datos de Ventas (P3) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/5717576/pexels-photo-5717576.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Operaciones OLAP" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 3: Operaciones OLAP con Datos de Ventas</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio ilustra cómo realizar operaciones fundamentales de Procesamiento Analítico en Línea (OLAP) utilizando PDI.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Demuestra operaciones como Drill-down, Roll-up, Dice y Slice.</li>
+
+                                            <li>Agrega ventas por mes, producto, trimestre y categoría.</li>
+
+                                            <li>Genera múltiples salidas con diferentes vistas de los datos.</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `proceso.ktr` en PDI y ejecuta la transformación.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 4: Preparación de Datos y Reporte en Excel (P4) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Reporte en Excel" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 4: Preparación de Datos y Reporte en Excel</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio demuestra un flujo ETL para preparar datos y generar un reporte estructurado en formato Excel.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Lee datos de ventas desde un archivo CSV.</li>
+
+                                            <li>Calcula el total de ventas para cada registro.</li>
+
+                                            <li>Ordena los datos por fecha y renombra los campos.</li>
+
+                                            <li>Exporta los datos procesados a un archivo de Microsoft Excel (`Salida.xls`).</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `Proceso.ktr` en PDI y ejecuta la transformación.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 5: Simulación de Data Warehouse (P5) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Data Warehouse" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 5: Simulación de Data Warehouse</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio simula un proceso ETL de Data Warehouse, uniendo una tabla de hechos con múltiples dimensiones para generar reportes agregados.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Lee una tabla de hechos y tres tablas de dimensión.</li>
+
+                                            <li>Construye un esquema en estrella uniendo las tablas.</li>
+
+                                            <li>Realiza tres agregaciones en paralelo para responder a distintas preguntas de negocio.</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `Proceso.ktr` en PDI y ejecuta la transformación.</p>
+
+                                </div>
+
+                            </div>
+
+                                                        <!-- Ejercicio 6: Integración de Datos y Salida JSON (P6) -->
+
+                                                        <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                                            <img src="https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Salida JSON" class="w-full h-48 object-cover">
+
+                                                            <div class="p-6">
+
+                                                                <h3 class="text-xl font-bold mb-2">Ejercicio 6: Integración de Datos y Salida JSON</h3>
+
+                                                                <p class="text-gray-600 mb-4 text-sm">Este ejercicio demuestra la integración de datos de ventas y productos, el cálculo de ingresos y la exportación a formato JSON.</p>
+
+                                                                <div class="mb-4 text-sm">
+
+                                                                    <p class="font-semibold">Qué hace:</p>
+
+                                                                    <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                                                        <li>Lee datos de productos y ventas.</li>
+
+                                                                        <li>Une los datos de ventas con la información de los productos.</li>
+
+                                                                        <li>Calcula el `ingreso_total` para cada venta.</li>
+
+                                                                        <li>Exporta los datos enriquecidos a un archivo JSON estructurado.</li>
+
+                                                                    </ul>
+
+                                                                </div>
+
+                                                                <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                                                    Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                                                </a>
+
+                                                                <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `Proceso.ktr` en PDI y ejecuta la transformación.</p>
+
+                                                            </div>
+
+                                                        </div>
+
+                            
+
+                                                        <!-- Ejercicio 7: Creación de Star Schema y Consultas (P7) -->
+
+                                                        <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                                            <img src="https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Star Schema y Consultas" class="w-full h-48 object-cover">
+
+                                                            <div class="p-6">
+
+                                                                <h3 class="text-xl font-bold mb-2">Ejercicio 7: Creación de Star Schema y Consultas</h3>
+
+                                                                <p class="text-gray-600 mb-4 text-sm">Este ejercicio demuestra la creación de un esquema en estrella y la ejecución de consultas analíticas en una base de datos HSQLDB.</p>
+
+                                                                <div class="mb-4 text-sm">
+
+                                                                    <p class="font-semibold">Qué hace:</p>
+
+                                                                    <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                                                        <li>Crea un esquema en estrella con tablas de dimensiones (producto, tienda, fecha) y una tabla de hechos (ventas).</li>
+
+                                                                        <li>Carga datos en las tablas desde archivos CSV.</li>
+
+                                                                        <li>Ejecuta varias consultas SQL para analizar los datos.</li>
+
+                                                                        <li>Exporta los resultados a archivos CSV y Excel.</li>
+
+                                                                    </ul>
+
+                                                                </div>
+
+                                                                <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                                                    Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                                                </a>
+
+                                                                <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `consultas.ktr` en PDI y ejecuta la transformación.</p>
+
+                                                            </div>
+
+                                                        </div>
+
+                            
+
+                                                        <!-- Ejercicio 8: ETL Completo y Visualización de Datos (P8) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/5198239/pexels-photo-5198239.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="ETL y Visualización" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 8: ETL Completo y Visualización de Datos</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio integra la configuración de una base de datos, la carga de datos, la ejecución de consultas analíticas y la preparación para la visualización externa.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Crea y carga datos en una base de datos HSQLDB local.</li>
+
+                                            <li>Ejecuta tres consultas SQL analíticas para generar reportes.</li>
+
+                                            <li>Genera archivos CSV con los resultados para ser usados por archivos HTML.</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `proc.ktr` en PDI, ejecuta la transformación y luego abre los archivos `grafico*.html`.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 9: Operaciones OLAP Avanzadas (P9) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Operaciones OLAP Avanzadas" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 9: Operaciones OLAP Avanzadas</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio avanzado demuestra las operaciones OLAP clásicas (Drill-Down, Roll-Up, Slice, Dice, Pivoting) en un esquema de Data Warehouse.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Carga un esquema en estrella en una base de datos HSQLDB.</li>
+
+                                            <li>Ejecuta 5 consultas SQL que simulan operaciones OLAP para análisis multidimensional.</li>
+
+                                            <li>Genera 5 archivos CSV con los resultados de cada consulta.</li>
+
+                                            <li>Incluye 4 archivos HTML para visualizar los resultados.</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, abre `Proceso.ktr` en PDI, ejecuta la transformación y luego abre los archivos `grafico_*.html`.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 10: Creación de Dataset OLAP (P10) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/7567445/pexels-photo-7567445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Dataset OLAP" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 10: Creación de Dataset OLAP</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio realiza un proceso ETL fundamental para construir una tabla de hechos denormalizada, lista para el análisis OLAP.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Lee y combina datos de clientes, productos y ventas.</li>
+
+                                            <li>Agrupa los datos por ciudad, fecha y producto.</li>
+
+                                            <li>Calcula la suma de cantidad e importe para cada grupo.</li>
+
+                                            <li>Genera un único archivo CSV (`ventas_olap.csv`) con los datos agregados.</li>
+
+                                        </ul>
+
+                                        <p class="font-semibold mt-2">Nota Importante:</p>
+
+                                        <p class="text-gray-600 ml-4">Las rutas de los archivos en la transformación están codificadas a `C:\CuboOLAP`, por lo que no es portable sin modificarlas.</p>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, ajusta las rutas de los archivos de entrada/salida en `ProcesoOLAP.ktr` y ejecuta la transformación.</p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Ejercicio 11: Construcción de Star Schema Remoto (P11) -->
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+
+                                <img src="https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Star Schema Remoto" class="w-full h-48 object-cover">
+
+                                <div class="p-6">
+
+                                    <h3 class="text-xl font-bold mb-2">Ejercicio 11: Construcción de Star Schema Remoto</h3>
+
+                                    <p class="text-gray-600 mb-4 text-sm">Este ejercicio demuestra la creación y población de un esquema en estrella en una base de datos MySQL remota.</p>
+
+                                    <div class="mb-4 text-sm">
+
+                                        <p class="font-semibold">Qué hace:</p>
+
+                                        <ul class="list-disc list-inside text-gray-600 ml-4">
+
+                                            <li>Conecta a una base de datos MySQL remota (Aiven Cloud).</li>
+
+                                            <li>Crea tablas de dimensión (`product_dim`, `store_dim`, `date_dim`) y una tabla de hechos (`sales_fact`).</li>
+
+                                            <li>Carga datos desde archivos CSV locales a las tablas remotas.</li>
+
+                                            <li>Ejecuta una consulta simple sobre la tabla `product_dim`.</li>
+
+                                        </ul>
+
+                                        <p class="font-semibold mt-2">Entradas:</p>
+
+                                        <p class="text-gray-600 ml-4">Archivos CSV (`product_dim.csv`, `store_dim.csv`, `date_dim.csv`, `sales_fact.csv`).</p>
+
+                                        <p class="font-semibold mt-2">Salidas:</p>
+
+                                        <p class="text-gray-600 ml-4">Un archivo CSV (`Consulta1.csv`) con los datos de `product_dim`.</p>
+
+                                        <p class="font-semibold text-red-600 mt-2">¡Advertencia de Seguridad Crítica!</p>
+
+                                        <p class="text-gray-600 ml-4">Esta transformación contiene credenciales de base de datos sensibles (usuario y contraseña) codificadas directamente en el archivo `.ktr`. Esto representa un riesgo de seguridad significativo y no se recomienda para entornos de producción.</p>
+
+                                    </div>
+
+                                    <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="font-semibold text-blue-600 hover:underline flex items-center">
+
+                                        Ver en GitHub <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+
+                                    </a>
+
+                                    <p class="text-gray-500 text-xs mt-2">Para utilizar: Descarga el repositorio, asegúrate de tener acceso a la base de datos remota, abre `procesop11.ktr` en PDI y ejecuta la transformación.</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+        <!-- 3. GRAFICOS -->
+        <section id="graficos" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Gráficos y Visualizaciones de Ejercicios</h2>
+                    <p class="mt-3 text-gray-600 max-w-3xl mx-auto">Explora los resultados de los ejercicios de Pentaho a través de visualizaciones interactivas, demostrando la capacidad de transformar datos en información valiosa.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-12 items-start">
+
+                    <!-- Gráfico Ejercicio 1: Cantidad por Cliente -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 1: Cantidad por Cliente</h3>
+                        <canvas id="chartP1"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Este gráfico de barras muestra la "Cantidad" procesada para cada cliente en el Ejercicio 1. Permite una comparación rápida del volumen de operación por cliente.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Se utiliza Chart.js para renderizar un gráfico de barras simple. Los datos provienen del archivo `final.csv` del ejercicio P1, mostrando la cantidad por cada cliente.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Ejercicio 2: Ventas por Producto -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 2: Ventas por Producto</h3>
+                        <canvas id="chartP2"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de barras que visualiza el "total de ventas" para cada "nombre del producto" consolidado en el Ejercicio 2. Ideal para identificar los productos más vendidos.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de barras de Chart.js que toma los datos de `Salida.txt` del ejercicio P2, agregando las ventas por producto.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Ejercicio 3: Ventas Trimestrales por Categoría -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 3: Ventas Trimestrales por Categoría</h3>
+                        <canvas id="chartP3"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de barras apiladas que muestra las "ventas_trimestre" por "trimestre", segmentadas por "categoria". Permite analizar la contribución de cada categoría a las ventas trimestrales.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Se utiliza un gráfico de barras apiladas de Chart.js, procesando los datos de `Salida_ventas_trimestre.txt` del ejercicio P3 para mostrar la evolución de las categorías.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Ejercicio 4: Tendencia de Ventas (Simulado) -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 4: Tendencia de Ventas</h3>
+                        <canvas id="chartP4"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de líneas que ilustra la tendencia de las ventas totales (`Calculo`) a lo largo del tiempo (`Fecha`), inferido del proceso de reporte en Excel del Ejercicio 4.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de líneas de Chart.js que simula la evolución de las ventas. Los datos se basan en la estructura de salida del `Proceso.ktr` de P4.</p>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Gráfico Ejercicio 6: Ingresos por Categoría -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 6: Ingresos por Categoría</h3>
+                        <canvas id="chartP6"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de barras que muestra los "ingreso_total" agregados por "categoria" del archivo JSON del Ejercicio 6. Permite comparar el rendimiento de ingresos entre categorías.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de barras de Chart.js que procesa los datos agregados del `analisis_ventas.json` de P6.</p>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Gráfico Ejercicio 8: Ventas por Producto -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 8: Ventas por Producto</h3>
+                        <canvas id="chartP8"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de barras que muestra las "VENTAS" totales para cada "NOMBRE" de producto, utilizando los datos de `ventas_por_producto.csv` del Ejercicio 8. Destaca el rendimiento individual de cada producto.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de barras de Chart.js que consume directamente los datos de ventas por producto de P8.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Ejercicio 9: Ventas de Productos por Región -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 9: Ventas por Región</h3>
+                        <canvas id="chartP9"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de barras apiladas que desglosa las ventas de cada producto por las regiones "PACÍFICO", "CENTRAL" y "OCCIDENTE", utilizando `Consulta 5.csv` del Ejercicio 9. Ideal para análisis geográfico de ventas.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de barras apiladas de Chart.js que visualiza la distribución regional de las ventas de productos de P9.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Ejercicio 10: Importe Total por Ciudad -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 10: Importe por Ciudad</h3>
+                        <canvas id="chartP10"></canvas>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico de barras que presenta el "SUMImporte" total por "ciudad", derivado del dataset OLAP del Ejercicio 10. Permite comparar el rendimiento de ingresos entre diferentes ciudades.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de barras de Chart.js que utiliza los datos agregados de `ventas_olap..csv` de P10.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gráfico Ejercicio 11: Productos por Categoría -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-700">Ejercicio 11: Productos por Categoría</h3>
+                        <div class="max-w-sm mx-auto">
+                            <canvas id="chartP11"></canvas>
+                        </div>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <p class="font-semibold">Descripción:</p>
+                            <p>Gráfico circular que muestra la distribución de productos por "category", utilizando los datos de `Consulta1.csv` del Ejercicio 11. Ofrece una vista de la composición del catálogo de productos.</p>
+                            <p class="font-semibold mt-2">Implementación:</p>
+                            <p>Un gráfico de pastel de Chart.js que cuenta los productos por categoría del archivo de salida de P11.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. INFORMACION SOBRE EL EQUIPO -->
+        <section id="equipo" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Créditos y Datos Personales de los Integrantes</h2>
+                    <p class="mt-3 text-gray-600 max-w-3xl mx-auto">Conoce al equipo detrás de este proyecto y sus contribuciones.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-center mb-16">
+                    <!-- Integrante: Luis David Oporta Reyes -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md">
+                        <img src="david.jfif" alt="Luis David Oporta Reyes" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4">
+                        <h3 class="text-xl font-bold">Luis David Oporta Reyes</h3>
+                        <p class="text-gray-500 mb-2">Liderazgo y Arquitectura de Datos</p>
+                        <p class="text-gray-600 text-sm mb-4">Liderazgo en la conceptualización del proyecto, diseño de la arquitectura de datos y desarrollo de transformaciones ETL clave.</p>
+                        <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-blue-600 text-sm">
+                            <a href="https://www.facebook.com/share/1NFht6B8LQ/" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-facebook text-2xl mb-1"></i>
+                                Facebook
+                            </a>
+                            <a href="https://www.instagram.com/ldavid_or?igsh=aGVmbzczdG96MW9r" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-instagram text-2xl mb-1"></i>
+                                Instagram
+                            </a>
+                            <a href="https://wa.me/50557994806" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-whatsapp text-2xl mb-1"></i>
+                                WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Integrante: Heidy De Jesús Huete Luna -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md">
+                        <img src="heidy.jfif" alt="Heidy De Jesús Huete Luna" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4">
+                        <h3 class="text-xl font-bold">Heidy De Jesús Huete Luna</h3>
+                        <p class="text-gray-500 mb-2">Integración y Calidad de Datos</p>
+                        <p class="text-gray-600 text-sm mb-4">Especialista en la integración de datos, creación de cubos OLAP y aseguramiento de la calidad de los datos.</p>
+                        <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-blue-600 text-sm">
+                            <a href="https://www.facebook.com/share/17afJeuABy/" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-facebook text-2xl mb-1"></i>
+                                Facebook
+                            </a>
+                            <a href="https://www.instagram.com/heid_dydy?igsh=MThrZWdmM3p2MnRleg==" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-instagram text-2xl mb-1"></i>
+                                Instagram
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Integrante: Iris Griselda Ortega Bonilla -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md">
+                        <img src="iris.jfif" alt="Iris Griselda Ortega Bonilla" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4">
+                        <h3 class="text-xl font-bold">Iris Griselda Ortega Bonilla</h3>
+                        <p class="text-gray-500 mb-2">Análisis y Diseño de Reportes</p>
+                        <p class="text-gray-600 text-sm mb-4">Encargada del análisis de requisitos, diseño de reportes y dashboards, y validación de la información.</p>
+                        <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-blue-600 text-sm">
+                            <a href="https://www.facebook.com/share/19w38MNpV6/" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-facebook text-2xl mb-1"></i>
+                                Facebook
+                            </a>
+                            <a href="https://wa.me/50586494293" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-whatsapp text-2xl mb-1"></i>
+                                WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Integrante: Snaijder Alexander Vargas Suarez -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md">
+                        <img src="snaijder.jfif" alt="Snaijder Alexander Vargas Suarez" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4">
+                        <h3 class="text-xl font-bold">Snaijder Alexander Vargas Suarez</h3>
+                        <p class="text-gray-500 mb-2">Desarrollo Front-end y Visualización</p>
+                        <p class="text-gray-600 text-sm mb-4">Desarrollador front-end, responsable de la implementación de la interfaz de usuario y la visualización de datos interactiva.</p>
+                        <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-blue-600 text-sm">
+                            <a href="https://www.instagram.com/snaijder_v?igsh=aTllbDZ0bjJwZXkw" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-instagram text-2xl mb-1"></i>
+                                Instagram
+                            </a>
+                            <a href="https://tiktok.com/@snaijder_v" target="_blank" class="flex flex-col items-center hover:text-blue-800">
+                                <i class="fa-brands fa-tiktok text-2xl mb-1"></i>
+                                TikTok
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contribuciones Individuales -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Contribución de cada Integrante</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                        <li><span class="font-semibold">Luis David Oporta Reyes:</span> Liderazgo en la conceptualización del proyecto, diseño de la arquitectura de datos y desarrollo de transformaciones ETL clave.</li>
+                        <li><span class="font-semibold">Heidy De Jesús Huete Luna:</span> Especialista en la integración de datos, creación de cubos OLAP y aseguramiento de la calidad de los datos.</li>
+                        <li><span class="font-semibold">Iris Griselda Ortega Bonilla:</span> Encargada del análisis de requisitos, diseño de reportes y dashboards, y validación de la información.</li>
+                        <li><span class="font-semibold">Snaijder Alexander Vargas Suarez:</span> Desarrollador front-end, responsable de la implementación de la interfaz de usuario y la visualización de datos interactiva.</li>
+                    </ul>
+                </div>
+
+                <!-- Agradecimientos y Referencias -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Agradecimientos y Referencias</h3>
+                    <p class="text-gray-700 mb-4">Agradecemos a nuestros profesores por su guía y apoyo constante durante el desarrollo de este proyecto. También extendemos nuestro agradecimiento a la comunidad de código abierto de Pentaho por las herramientas robustas que hicieron posible este trabajo.</p>
+                    <p class="text-gray-700">Referencias clave incluyen la documentación oficial de Pentaho Data Integration, Chart.js para la visualización de datos, y Tailwind CSS para el diseño responsivo.</p>
+                </div>
+
+                <!-- Metodología de Desarrollo -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Metodología de Desarrollo</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                        <li><span class="font-semibold">Herramientas utilizadas:</span> Pentaho Data Integration (PDI), GitHub para control de versiones, HTML, CSS y JavaScript para el desarrollo del sitio web.</li>
+                        <li><span class="font-semibold">Procesos de creación y prueba de cubos OLAP:</span> Se siguió un enfoque iterativo para el diseño, implementación y validación de los cubos, asegurando la integridad y la utilidad de los datos analíticos.</li>
+                        <li><span class="font-semibold">Desarrollo del sitio web:</span> El diseño y desarrollo del sitio web se realizó utilizando un enfoque ágil, con iteraciones constantes y el apoyo de herramientas de IA como Gemini CLI para la generación y refactorización de código.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <!-- Anexos -->
+        <section id="anexos" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Anexos</h2>
+                <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold mb-3 text-blue-600">Repositorio GitHub</h3>
+                        <p class="text-gray-600 mb-4">Accede al código fuente completo del proyecto y su historial de versiones.</p>
+                        <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git" target="_blank" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                            Ir al Repositorio
+                            <i class="fa-brands fa-github ml-2 text-lg"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold mb-3 text-blue-600">Código Fuente Relevante</h3>
+                        <p class="text-gray-600 mb-4">Explora los archivos clave de las transformaciones y trabajos de Pentaho.</p>
+                        <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git/tree/main/P1" target="_blank" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                            Ver Código
+                            <i class="fa-solid fa-code ml-2 text-lg"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <h3 class="text-xl font-semibold mb-3 text-blue-600">Documentación Técnica</h3>
+                        <p class="text-gray-600 mb-4">Consulta la documentación detallada sobre la implementación y diseño.</p>
+                        <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas.git/blob/main/README.md" target="_blank" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                            Leer Documentación
+                            <i class="fa-solid fa-file-alt ml-2 text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Proyecto BI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Lógica del Menú Móvil ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        // Cerrar menú al hacer clic en un enlace
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // --- Lógica de Gráficos con Chart.js ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Gráfico Ejercicio 1: Cantidad por Cliente
+            const chartP1Ctx = document.getElementById('chartP1').getContext('2d');
+            new Chart(chartP1Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['María López', 'Armando Rayo'],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [120.5, 250.6],
+                        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Gráfico Ejercicio 2: Ventas por Producto
+            const chartP2Ctx = document.getElementById('chartP2').getContext('2d');
+            new Chart(chartP2Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Computadora', 'Mouse', 'Teclado', 'Monitor', 'Impresora', 'Cámara', 'USB', 'Disco Duro', 'Altavoz', 'Cargador'],
+                    datasets: [{
+                        label: 'Total de Ventas',
+                        data: [1200, 50, 30, 150, 50, 60, 200, 80, 250, 80],
+                        backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Gráfico Ejercicio 3: Ventas Trimestrales por Categoría
+            const chartP3Ctx = document.getElementById('chartP3').getContext('2d');
+            new Chart(chartP3Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [
+                        {
+                            label: 'Miniaturas',
+                            data: [500, 170, 210, 280],
+                            backgroundColor: 'rgba(249, 115, 22, 0.6)'
+                        },
+                        {
+                            label: 'Mesa',
+                            data: [180, 620, 350, 380],
+                            backgroundColor: 'rgba(139, 92, 246, 0.6)'
+                        },
+                        {
+                            label: 'Juguetes',
+                            data: [420, 240, 260, 310],
+                            backgroundColor: 'rgba(236, 72, 153, 0.6)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, beginAtZero: true }
+                    },
+                    plugins: { legend: { display: true } }
+                }
+            });
+
+            // Gráfico Ejercicio 4: Tendencia de Ventas (Simulado)
+            const chartP4Ctx = document.getElementById('chartP4').getContext('2d');
+            new Chart(chartP4Ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2025-01-01', '2025-01-02', '2025-01-03', '2025-01-04'],
+                    datasets: [{
+                        label: 'Ventas Totales',
+                        data: [1200, 50, 150, 200], // Simulated data
+                        fill: false,
+                        borderColor: 'rgba(234, 179, 8, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+
+
+            // Gráfico Ejercicio 6: Ingresos por Categoría
+            const chartP6Ctx = document.getElementById('chartP6').getContext('2d');
+            new Chart(chartP6Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Electrónica', 'Accesorios', 'Wearables'],
+                    datasets: [{
+                        label: 'Ingresos Totales',
+                        data: [3000, 500, 540], // Simulated aggregated data
+                        backgroundColor: 'rgba(244, 63, 94, 0.6)',
+                        borderColor: 'rgba(244, 63, 94, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+
+
+            // Gráfico Ejercicio 8: Ventas por Producto
+            const chartP8Ctx = document.getElementById('chartP8').getContext('2d');
+            new Chart(chartP8Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Camisa Polo', 'Pantalón Jeans', 'Zapatos Deportivos', 'Cinturón Cuero'],
+                    datasets: [{
+                        label: 'Ventas',
+                        data: [90, 100, 405, 24],
+                        backgroundColor: 'rgba(217, 119, 6, 0.6)',
+                        borderColor: 'rgba(217, 119, 6, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Gráfico Ejercicio 9: Ventas de Productos por Región
+            const chartP9Ctx = document.getElementById('chartP9').getContext('2d');
+            new Chart(chartP9Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Camisa Polo', 'Pantalón Jeans', 'Zapatos Deportivos', 'Monitor X', 'Mochila Urbana'],
+                    datasets: [
+                        {
+                            label: 'PACÍFICO',
+                            data: [5, 0, 3, 0, 3],
+                            backgroundColor: 'rgba(59, 130, 246, 0.6)'
+                        },
+                        {
+                            label: 'CENTRAL',
+                            data: [6, 3, 0, 1, 0],
+                            backgroundColor: 'rgba(16, 185, 129, 0.6)'
+                        },
+                        {
+                            label: 'OCCIDENTE',
+                            data: [0, 2, 0, 2, 4],
+                            backgroundColor: 'rgba(249, 115, 22, 0.6)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, beginAtZero: true }
+                    },
+                    plugins: { legend: { display: true } }
+                }
+            });
+
+            // Gráfico Ejercicio 10: Importe Total por Ciudad
+            const chartP10Ctx = document.getElementById('chartP10').getContext('2d');
+            new Chart(chartP10Ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['León', 'Managua'],
+                    datasets: [{
+                        label: 'Importe Total',
+                        data: [30, 40],
+                        backgroundColor: 'rgba(139, 92, 246, 0.6)',
+                        borderColor: 'rgba(139, 92, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Gráfico Ejercicio 11: Productos por Categoría
+            const chartP11Ctx = document.getElementById('chartP11').getContext('2d');
+            new Chart(chartP11Ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Hardware', 'Electronics', 'Accessories'],
+                    datasets: [{
+                        data: [3, 3, 3], // Simulated counts
+                        backgroundColor: [
+                            'rgba(236, 72, 153, 0.7)',
+                            'rgba(6, 182, 212, 0.7)',
+                            'rgba(234, 179, 8, 0.7)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: { responsive: true }
+            });
+        });
+    </script>
+
+</body>
+</html>

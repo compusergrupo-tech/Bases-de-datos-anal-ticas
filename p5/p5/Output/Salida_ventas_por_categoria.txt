@@ -1,0 +1,3 @@
+categoria,total_cantidad
+Herramientas,1
+Abrasivos   ,10

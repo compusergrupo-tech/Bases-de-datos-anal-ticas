@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas de Electrónica</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { display:flex; flex-direction:column; justify-content:center; 
+            align-items:center; min-height:100vh; margin:0; font-family:Arial; background-color:#f9fafc; }
+        canvas { max-width:900px; max-height:500px; }
+    </style>
+</head>
+<body>
+
+<h2>Unidades Vendidas - Categoría Electrónica</h2>
+<canvas id="graficoVentas"></canvas>
+
+<script>
+fetch('Consulta 3.csv')
+    .then(r=>r.ok?r.text():Promise.reject('No se pudo cargar el CSV'))
+    .then(csv=>{
+        const rows=csv.trim().split('\n');
+        const meses=[...new Set(rows.slice(1).map(r=>r.split(',')[0].trim()))];
+        const productos=[...new Set(rows.slice(1).map(r=>r.split(',')[1].trim()))];
+        const dataMap={};
+        rows.slice(1).forEach(r=>{
+            const [mes,prod,uni]=r.split(',').map(x=>x.trim());
+            if(!dataMap[mes])dataMap[mes]={};
+            dataMap[mes][prod]=Number(uni);
+        });
+        const colores=['#4287f5','#42f554','#f5a142','#f54291','#9b42f5','#42f5dd'];
+        const datasets=meses.map((m,i)=>({ label:m, data:productos.map(p=>dataMap[m]?.[p]||0), backgroundColor:colores[i%colores.length]}));
+        new Chart(document.getElementById('graficoVentas'),{ type:'bar', data:{ labels:productos, datasets }, options:{ responsive:true, scales:{ y:{ beginAtZero:true } } } });
+    })
+    .catch(e=>document.body.innerHTML=`<p style="color:red">${e}</p>`);
+</script>
+
+</body>
+</html>

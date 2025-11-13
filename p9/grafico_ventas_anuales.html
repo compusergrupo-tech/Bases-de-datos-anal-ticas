@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas Anuales</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; 
+            flex-direction: column; min-height: 100vh; font-family: Arial; background: #f4f7fa; margin: 0; }
+        canvas { max-width: 800px; max-height: 500px; }
+    </style>
+</head>
+<body>
+
+<h2>Ventas Totales por Año</h2>
+<canvas id="graficoVentas"></canvas>
+
+<script>
+fetch('Consulta 2.csv')
+    .then(r => r.ok ? r.text() : Promise.reject('No se pudo cargar el CSV'))
+    .then(csv => {
+        const rows = csv.trim().split('\n');
+        const labels = [], data = [];
+        for(let i=1;i<rows.length;i++){
+            const [año, unidades] = rows[i].split(',').map(v=>v.trim());
+            labels.push(año); data.push(Number(unidades));
+        }
+        new Chart(document.getElementById('graficoVentas'), {
+            type:'bar',
+            data:{ labels, datasets:[{ label:'Unidades Vendidas', data, backgroundColor:'#4287f5' }]},
+            options:{ responsive:true, scales:{ y:{ beginAtZero:true } } }
+        });
+    })
+    .catch(e=>document.body.innerHTML=`<p style="color:red">${e}</p>`);
+</script>
+
+</body>
+</html>

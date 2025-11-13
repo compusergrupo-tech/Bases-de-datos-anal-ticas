@@ -1,0 +1,4 @@
+id_venta,fecha,id_cliente,id_producto,cantidad,importe
+1,2025-10-25,1,101,2,30
+2,2025-10-25,2,102,1,40
+3,2025-10-26,1,102,3,120

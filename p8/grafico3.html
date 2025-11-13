@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Ventas desde CSV</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Estilos opcionales */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        #graficoVentas {
+            max-width: 800px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="graficoVentas"></canvas>
+
+    <script>
+        // Llama a la función fetch para cargar el archivo CSV
+        fetch('total_ventas_trimestre.csv')
+            .then(response => {
+                // Paso 1: Verificar que la carga fue exitosa (código de estado 200)
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el archivo: ' + response.statusText + '. Asegúrate de que "ventas_por_producto.csv" esté en la misma carpeta.');
+                }
+                return response.text();
+            })
+            .then(csv => {
+                // Paso 2: Procesar el contenido del CSV
+                // Corrección: Usar '\n' para dividir las filas.
+                let rows = csv.trim().split('\n');
+                let labels = [], data = [];
+
+                // Iterar desde i = 1 para saltar la fila de encabezado ("NOMBRE,VENTAS")
+                for (let i = 1; i < rows.length; i++) {
+                    let cols = rows[i].split(',');
+                    
+                    if (cols.length >= 2) {
+                        labels.push(cols[0].trim());
+                        // Convertir el segundo elemento a número (VENTAS)
+                        data.push(Number(cols[1].trim()));
+                    }
+                }
+
+                // Paso 3: Crear el gráfico con los datos extraídos
+                new Chart(document.getElementById('graficoVentas'), {
+                    type: 'bar', // Tipo de gráfico: barras
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Ventas por trimestre',
+                            data: data,
+                            backgroundColor: ['#4287f5', '#f58942', '#42f589', '#f5426f']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                // Manejo de errores de red o de parsing
+                console.error('Error al generar el gráfico:', error);
+                // Muestra un mensaje de error en la página
+                document.getElementById('graficoVentas').parentElement.innerHTML = '<p style="color: red;">' + error.message + '</p>';
+            });
+    </script>
+
+</body>
+</html>
