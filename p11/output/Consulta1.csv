@@ -1,0 +1,11 @@
+product_id,product_name,category
+1,Widget A                                          ,Hardware                                          
+2,Widget B                                          ,Hardware                                          
+3,Gadget C                                          ,Electronics                                       
+4,Gizmo D                                           ,Electronics                                       
+5,Thing E                                           ,Accessories                                       
+6,Item F                                            ,Accessories                                       
+7,Product G                                         ,Hardware                                          
+8,Product H                                         ,Electronics                                       
+9,Product I                                         ,Accessories                                       
+10,Product J                                         ,Hardware                                          

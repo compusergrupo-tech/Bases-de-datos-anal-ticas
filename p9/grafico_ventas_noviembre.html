@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas por Ciudad y Categoría (Noviembre)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { display:flex; flex-direction:column; justify-content:center; 
+            align-items:center; min-height:100vh; font-family:Arial; margin:0; background-color:#f8f9fa; }
+        canvas { max-width:900px; max-height:500px; }
+    </style>
+</head>
+<body>
+
+<h2>Unidades Vendidas por Ciudad y Categoría - Noviembre</h2>
+<canvas id="graficoVentas"></canvas>
+
+<script>
+fetch('Consulta 4.csv')
+    .then(r=>r.ok?r.text():Promise.reject('No se pudo cargar el CSV'))
+    .then(csv=>{
+        const rows=csv.trim().split('\n');
+        const ciudades=[...new Set(rows.slice(1).map(r=>r.split(',')[0].trim()))];
+        const categorias=[...new Set(rows.slice(1).map(r=>r.split(',')[1].trim()))];
+        const dataMap={};
+        rows.slice(1).forEach(r=>{
+            const [ciudad,cat,uni]=r.split(',').map(x=>x.trim());
+            if(!dataMap[cat])dataMap[cat]={};
+            dataMap[cat][ciudad]=Number(uni);
+        });
+        const colores=['#4287f5','#f54291','#42f554','#f5a142','#9b42f5','#42f5dd'];
+        const datasets=categorias.map((c,i)=>({ label:c, data:ciudades.map(ci=>dataMap[c]?.[ci]||0), backgroundColor:colores[i%colores.length]}));
+        new Chart(document.getElementById('graficoVentas'),{ type:'bar', data:{ labels:ciudades, datasets }, options:{ responsive:true, scales:{ y:{ beginAtZero:true } } } });
+    })
+    .catch(e=>document.body.innerHTML=`<p style="color:red">${e}</p>`);
+</script>
+
+</body>
+</html>

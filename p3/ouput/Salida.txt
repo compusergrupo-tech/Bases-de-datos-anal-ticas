@@ -1,0 +1,17 @@
+mes,producto,ventas_por_mes
+Enero     ,Carrito,150
+Enero     ,Muñeca,200
+Febrero   ,Carrito,100
+Febrero   ,Juego  ,180
+Marzo     ,Muñeca,220
+Marzo     ,Carrito,250
+Abril     ,Juego  ,300
+Mayo      ,Muñeca,240
+Mayo      ,Carrito,170
+Junio     ,Juego  ,320
+Julio     ,Carrito,210
+Agosto    ,Muñeca,260
+Septiembre,Juego  ,350
+Octubre   ,Carrito,280
+Noviembre ,Muñeca,310
+Diciembre ,Juego  ,380

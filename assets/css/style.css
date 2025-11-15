@@ -1,0 +1,32 @@
+/* assets/css/style.css */
+
+/* Importar fuentes para que Tailwind las reconozca */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Serif+Pro:wght@600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #F9FAFB; /* Fondo gris claro */
+  color: #111827; /* Texto casi negro */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Source Serif Pro', serif;
+}
+
+/* Estilo para el scrollbar (opcional, pero mejora la estética) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563EB; /* Color primario */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1D4ED8; /* Un tono más oscuro del primario */
+}

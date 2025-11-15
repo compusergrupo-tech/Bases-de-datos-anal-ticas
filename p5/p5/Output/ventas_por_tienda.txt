@@ -1,0 +1,2 @@
+nombre_tienda,total_ventas
+Ferreteria Sur    ,120.0

@@ -1,0 +1,11 @@
+producto_id,nombre,categoria,precio
+P001,Laptop A,Electrónica,850.00
+P002,Mouse Inalámbrico,Accesorios,25.50
+P003,Teclado Mecánico,Accesorios,75.00
+P004,Smartphone X,Electrónica,550.00
+P005,Smartwatch B,Wearables,180.00
+P006,Auriculares C,Electrónica,120.00
+P007,Funda para Móvil,Accesorios,15.00
+P008,Monitor Z,Electrónica,280.00
+P009,Webcam HD,Accesorios,50.00
+P010,Tablet Y,Electrónica,300.00

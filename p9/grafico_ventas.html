@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas por Producto y Mes</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+        }
+        canvas { 
+            max-width: 900px; 
+            max-height: 500px; 
+        }
+    </style>
+</head>
+<body>
+
+<h2>Ventas por Producto y Mes</h2>
+<canvas id="graficoVentas"></canvas>
+
+<script>
+fetch('Consulta 1.csv')
+    .then(r => {
+        if (!r.ok) throw new Error('No se pudo cargar el archivo CSV');
+        return r.text();
+    })
+    .then(csv => {
+        const rows = csv.trim().split('\n');
+        rows.shift(); // quitar encabezado
+
+        // Limpiar datos
+        const datos = rows.map(r => {
+            const partes = r.split(',');
+            return {
+                mes: partes[0].trim(),
+                producto: partes[1].trim(),
+                unidades: Number(partes[2].trim())
+            };
+        });
+
+        // Ejes
+        const productos = [...new Set(datos.map(d => d.producto))];
+        const meses = [...new Set(datos.map(d => d.mes))];
+
+        // Crear estructura de datos: mes -> producto -> unidades
+        const dataMap = {};
+        meses.forEach(m => dataMap[m] = {});
+        datos.forEach(d => dataMap[d.mes][d.producto] = d.unidades);
+
+        // Colores
+        const colores = [
+            '#4287f5', '#42f554', '#f5a142', '#f54291', '#9b42f5',
+            '#42f5dd', '#f54242', '#7ac943', '#ffb347', '#00bcd4'
+        ];
+
+        // Crear datasets por mes
+        const datasets = meses.map((mes, i) => ({
+            label: mes,
+            data: productos.map(prod => dataMap[mes][prod] || 0),
+            backgroundColor: colores[i % colores.length]
+        }));
+
+        // Crear gráfico
+        new Chart(document.getElementById('graficoVentas'), {
+            type: 'bar',
+            data: {
+                labels: productos,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { position: 'top' } }
+            }
+        });
+    })
+    .catch(e => {
+        document.body.innerHTML = `<p style="color:red">${e.message}</p>`;
+    });
+</script>
+
+</body>
+</html>
