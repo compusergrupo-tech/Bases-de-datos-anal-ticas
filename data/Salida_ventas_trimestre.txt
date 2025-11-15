@@ -1,0 +1,13 @@
+trimestre	categoria	ventas_trimestre
+1	Miniaturas	500
+1	Mesa	180
+1	Juguetes	420
+2	Miniaturas	170
+2	Mesa	620
+2	Juguetes	240
+3	Miniaturas	210
+3	Mesa	350
+3	Juguetes	260
+4	Miniaturas	280
+4	Mesa	380
+4	Juguetes	310

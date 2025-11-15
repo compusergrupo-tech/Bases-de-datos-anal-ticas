@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Datos y BI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- PapaParse -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+Pro:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-serif { font-family: 'Source Serif Pro', serif; }
+        .bg-data-analysis {
+            background-image: url('https://images.unsplash.com/photo-1587440871875-bc1923764e6e?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 0;
+        }
+        .bg-data-analysis::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.3), rgba(107, 114, 128, 0.3));
+            z-index: -1;
+        }
+        .chart-container { 
+            position: relative; 
+            height: 300px; 
+            width: 100%; 
+        }
+        .status { 
+            font-size: 0.8rem; 
+            text-align: center; 
+            margin-top: 0.5rem; 
+        }
+        .error { color: #dc2626; }
+        .success { color: #16a34a; }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            transition: transform 0.3s ease;
+        }
+        img.object-cover {
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600 font-serif">Proyecto BI</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#pentaho" class="text-gray-600 hover:text-blue-600 transition-colors">Pentaho</a>
+                <a href="#ejercicios" class="text-gray-600 hover:text-blue-600 transition-colors">Ejercicios</a>
+                <a href="#graficos" class="text-gray-600 hover:text-blue-600 transition-colors">Gráficos</a>
+                <a href="#equipo" class="text-gray-600 hover:text-blue-600 transition-colors">Equipo</a>
+                <a href="#anexos" class="text-gray-600 hover:text-blue-600 transition-colors">Anexos</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 text-2xl" aria-label="Abrir menú" aria-expanded="false">
+                Menu
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="#pentaho" class="block py-3 px-6 text-sm hover:bg-gray-100">Pentaho y BBDD</a>
+            <a href="#ejercicios" class="block py-3 px-6 text-sm hover:bg-gray-100">Ejercicios</a>
+            <a href="#graficos" class="block py-3 px-6 text-sm hover:bg-gray-100">Gráficos</a>
+            <a href="#equipo" class="block py-3 px-6 text-sm hover:bg-gray-100">Equipo</a>
+            <a href="#anexos" class="block py-3 px-6 text-sm hover:bg-gray-100">Anexos</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="relative text-center py-20 bg-gray-900 overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gray-900 opacity-70"></div>
+            </div>
+            <div class="relative container mx-auto px-6 text-white z-10">
+                <h1 class="text-4xl md:text-5xl font-bold">Plataforma de Información Evaluativa</h1>
+                <p class="mt-4 text-lg max-w-2xl mx-auto">Análisis de datos con Pentaho, ETL, OLAP y visualización dinámica.</p>
+            </div>
+        </section>
+
+        <!-- 1. Página de Inicio: Vistazo General a Pentaho y Bases de Datos Analítica -->
+        <section id="pentaho" class="py-20 bg-data-analysis">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Vistazo General a Pentaho y Bases de Datos Analíticas</h2>
+                    <p class="mt-3 text-gray-200 max-w-3xl mx-auto">Exploración de Pentaho como herramienta de BI, su uso en análisis de datos y la creación de cubos OLAP.</p>
+                </div>
+
+                <!-- Descripción general de Pentaho -->
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg mb-12">
+                    <h3 class="text-2xl font-bold mb-4">Descripción General de Pentaho como Herramienta de Business Intelligence</h3>
+                    <p class="text-gray-700 mb-4">Pentaho es una suite de inteligencia de negocios (BI) de código abierto que ofrece una plataforma completa para el análisis de datos. Su fortaleza radica en su capacidad para cubrir todo el ciclo de vida del BI, desde la integración de datos (ETL) hasta la creación de informes, dashboards interactivos y análisis predictivo.</p>
+                    <p class="text-gray-700">Pentaho permite a las organizaciones extraer valor de sus datos mediante herramientas intuitivas y escalables, apoyando la toma de decisiones basada en datos en tiempo real.</p>
+                </div>
+
+                <!-- Explicación de su uso para el desarrollo de análisis de datos -->
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg mb-12">
+                    <h3 class="text-2xl font-bold mb-4">Explicación de su Uso para el Desarrollo de Análisis de Datos</h3>
+                    <p class="text-gray-700 mb-4">Pentaho se utiliza ampliamente para el desarrollo de análisis de datos gracias a su componente principal, Pentaho Data Integration (PDI), que facilita procesos ETL (Extract, Transform, Load). Esto permite conectar múltiples fuentes de datos, limpiar y transformar información, y cargarla en un data warehouse para análisis posteriores.</p>
+                    <p class="text-gray-700">Además, integra herramientas para visualización y reporting, como Pentaho Report Designer y Pentaho Analyzer, permitiendo a los usuarios crear informes dinámicos y explorar datos de manera interactiva, lo que acelera el desarrollo de insights accionables.</p>
+                </div>
+
+                <!-- Introducción a la creación de cubos OLAP utilizando Pentaho -->
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg mb-12">
+                    <h3 class="text-2xl font-bold mb-4">Introducción a la Creación de Cubos OLAP Utilizando Pentaho</h3>
+                    <p class="text-gray-700 mb-4">Los cubos OLAP (Online Analytical Processing) son estructuras multidimensionales que permiten un análisis rápido y flexible de datos. Pentaho facilita su creación mediante el Pentaho Schema Workbench, donde se definen dimensiones, medidas y jerarquías.</p>
+                    
+                    <!-- Conceptos fundamentales -->
+                    <h4 class="text-xl font-semibold mb-3">Conceptos Fundamentales</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>Dimensiones:</strong> Categorías de análisis, como tiempo, geografía o productos.</li>
+                        <li><strong>Medidas:</strong> Valores cuantitativos, como ventas o unidades vendidas.</li>
+                        <li><strong>Jerarquías:</strong> Niveles dentro de una dimensión, e.g., año > mes > día.</li>
+                        <li><strong>Hechos:</strong> Tablas que contienen las medidas y claves a dimensiones.</li>
+                    </ul>
+
+                    <!-- Pasos para la creación del cubo -->
+                    <h4 class="text-xl font-semibold mb-3">Pasos para la Creación del Cubo</h4>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2 mb-4">
+                        <li>Definir el esquema de datos en un data warehouse (e.g., esquema estrella).</li>
+                        <li>Usar Pentaho Schema Workbench para crear el modelo OLAP (dimensiones, medidas).</li>
+                        <li>Publicar el esquema en el servidor Pentaho.</li>
+                        <li>Verificar y ajustar el cubo mediante consultas MDX.</li>
+                    </ol>
+
+                    <!-- Integración con bases de datos y principales operaciones -->
+                    <h4 class="text-xl font-semibold mb-3">Integración con Bases de Datos y Principales Operaciones</h4>
+                    <p class="text-gray-700 mb-4">Pentaho se integra con bases de datos como MySQL, PostgreSQL o Oracle mediante conexiones JDBC. Las operaciones principales incluyen:</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li><strong>Slice & Dice:</strong> Seleccionar y filtrar dimensiones.</li>
+                        <li><strong>Drill-down/Roll-up:</strong> Navegar por jerarquías (detalle/agregación).</li>
+                        <li><strong>Pivot:</strong> Rotar dimensiones para nuevas perspectivas.</li>
+                    </ul>
+
+                    <!-- Descripción de los flujos de datos y procesamiento en Pentaho -->
+                    <h4 class="text-xl font-semibold mb-3">Descripción de los Flujos de Datos y Procesamiento en Pentaho</h4>
+                    <p class="text-gray-700">En Pentaho, los flujos de datos se gestionan mediante transformaciones (.ktr) para procesar filas individuales y trabajos (.kjb) para orquestar procesos. El procesamiento incluye extracción de fuentes, transformación (e.g., filtros, cálculos) y carga en destinos, todo de manera paralela y escalable.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Página de Ejercicios Realizados (Con Repositorio en GitHub) -->
+        <section id="ejercicios" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Ejercicios Realizados</h2>
+                    <p class="mt-3 text-gray-600">11 casos prácticos de ETL y análisis con Pentaho, alojados en <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline font-semibold">GitHub: compusergrupo-tech/Bases-de-datos-anal-ticas (rama master)</a></p>
+                </div>
+
+                <div class="mb-8 bg-blue-50 border border-blue-200 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2">Cómo Acceder a los Recursos en GitHub</h3>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                        <li>Ingresa a <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline">https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master</a></li>
+                        <li>Navega por las carpetas: <code class="bg-gray-200 px-2 py-1 rounded text-sm">P1</code>, <code class="bg-gray-200 px-2 py-1 rounded text-sm">P2</code>, ..., <code class="bg-gray-200 px-2 py-1 rounded text-sm">P11</code></li>
+                        <li>Descarga los archivos <code>.ktr</code> (transformaciones), <code>.kjb</code> (trabajos) y datos de entrada/salida.</li>
+                        <li>Abre en Pentaho Data Integration (Spoon) para ejecutar o modificar.</li>
+                    </ol>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- P1 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P1: Procesamiento de Clientes" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P1: Procesamiento de Clientes</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Filtra clientes con cantidad > 100, calcula impuesto del 15% sobre el total y genera un archivo consolidado.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>clientes.csv</code> (ID, nombre, cantidad)</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>final.csv</code> (cliente, cantidad, impuesto, total)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P2 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P2: Consolidación de Ventas" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P2: Consolidación de Ventas</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Une tablas de clientes, productos y ventas para generar un reporte unificado por producto.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>clientes.csv</code>, <code>productos.csv</code>, <code>ventas.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>Salida.txt</code> (producto, cliente, cantidad, total)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P3 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P3: Ventas por Trimestre y Categoría" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P3: Ventas por Trimestre y Categoría</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Agrupa ventas por trimestre y categoría de producto, calculando totales.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>ventas.csv</code>, <code>productos.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>Salida_ventas_trimestre.txt</code> (trimestre, categoría, ventas)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P4 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P4: Tendencia de Ventas" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P4: Tendencia de Ventas</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Agrupa ventas por fecha y calcula el total diario, generando un archivo para análisis de tendencias.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>ventas.csv</code> (fecha, importe)</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>salida.xls.csv</code> (fecha, total_ventas)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P6 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P6: Ingresos por Categoría" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P6: Ingresos por Categoría</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Agrupa ventas por categoría y calcula ingresos totales.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>ventas.csv</code>, <code>productos.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>analisis_ventas.json</code> (categoría, ingreso_total)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P8 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P8: Ventas por Producto" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P8: Ventas por Producto</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Identifica los productos con mayores ventas.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>ventas.csv</code>, <code>productos.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>ventas_por_producto.csv</code> (NOMBRE, VENTAS)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P9 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P9: Ventas por Región" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P9: Ventas por Región</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Genera matriz de ventas por región y producto (PACÍFICO, CENTRAL, OCCIDENTE).</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>ventas.csv</code>, <code>productos.csv</code>, <code>regiones.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>consulta5.csv</code> (NOMBRE, PACÍFICO, CENTRAL, OCCIDENTE)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P10 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P10: Importe por Ciudad" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P10: Importe por Ciudad</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Suma el importe total de ventas por ciudad.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>ventas.csv</code>, <code>ciudades.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>ventas_olap.csv</code> (ciudad, SUMImporte)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- P11 -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="P11: Productos por Categoría" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">P11: Productos por Categoría</h3>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Qué hace:</strong> Cuenta cuántos productos hay por categoría.</p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Entradas:</strong> <code>productos.csv</code></p>
+                            <p class="text-sm text-gray-600 mb-3"><strong>Salidas:</strong> <code>Consulta1.csv</code> (category, count)</p>
+                            <a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline text-sm flex items-center">
+                                Ver en GitHub (rama master) <i class="ml-1 fa-solid fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Página de Visualización de Resultados Gráficos -->
+        <section id="graficos" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Visualización de Resultados Gráficos</h2>
+                    <p class="mt-3 text-gray-600 max-w-3xl mx-auto">Presentación de gráficos generados a partir de los ejercicios, utilizando HTML, CSS y JavaScript para visualizaciones interactivas.</p>
+                </div>
+
+                <div class="mb-12 bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">Explicación Técnica sobre Cómo se Logra la Visualización con Código Web</h3>
+                    <p class="text-gray-700 mb-4">La visualización se logra mediante una combinación de tecnologías web: HTML para la estructura, CSS (con Tailwind CSS) para el estilo responsivo, y JavaScript para la interacción dinámica. Utilizamos:</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>Chart.js:</strong> Biblioteca para generar gráficos interactivos (barras, líneas, pie).</li>
+                        <li><strong>PapaParse:</strong> Para parsear archivos CSV dinámicamente.</li>
+                        <li><strong>Fetch API:</strong> Para cargar archivos de datos desde la carpeta <code>data/</code> de manera asíncrona.</li>
+                        <li><strong>JavaScript:</strong> Lógica para procesar datos, manejar errores y actualizar el DOM con resultados.</li>
+                    </ul>
+                    <p class="text-gray-700 mb-4">Cada gráfico se carga dinámicamente: se fetches el archivo, se parsea, se calcula la configuración del gráfico y se renderiza con Chart.js. Esto asegura interactividad (hover, zoom) y actualización automática si los datos cambian.</p>
+                    <p class="text-gray-700">Objetivo: Evidenciar la capacidad de presentar resultados analíticos de manera visual e interactiva, transformando datos crudos de Pentaho en insights accesibles.</p>
+                </div>
+
+                <div class="mb-12 bg-blue-50 p-8 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Ejemplos de Código</h3>
+                    <p class="text-gray-700 mb-4">A continuación, un ejemplo de código JavaScript para cargar y renderizar un gráfico de líneas (P4):</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-md overflow-x-auto text-sm">
+<code>
+// Ejemplo: Carga y renderiza P4 desde salida.xls.csv
+loadChart('chartP4', 'salida.xls.csv', data => {
+    const fechas = [];
+    const ventas = [];
+    data.forEach(r => {
+        const fecha = r.fecha?.trim();
+        const venta = parseFloat(r.total_ventas) || 0;
+        if (fecha && venta > 0) {
+            fechas.push(fecha);
+            ventas.push(venta);
+        }
+    });
+    return {
+        type: 'line',
+        data: {
+            labels: fechas,
+            datasets: [{
+                label: 'Ventas Diarias',
+                data: ventas,
+                borderColor: '#f97316',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: { y: { beginAtZero: true } }
+        }
+    };
+}, 'statusP4');
+</code>
+                    </pre>
+                    <p class="text-gray-700 mt-4">Este código agrupa por fecha, suma ventas y crea una línea suave con área sombreada.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-12">
+
+                    <!-- P1 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P1: Cantidad por Cliente</h3>
+                        <div class="chart-container"><canvas id="chartP1"></canvas></div>
+                        <p class="status" id="statusP1">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras que muestra cantidad por cliente, cargado de final.csv.</p>
+                    </div>
+
+                    <!-- P2 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P2: Ventas por Producto</h3>
+                        <div class="chart-container"><canvas id="chartP2"></canvas></div>
+                        <p class="status" id="statusP2">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras que muestra ventas totales por producto, cargado de Salida.txt.</p>
+                    </div>
+
+                    <!-- P3 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P3: Ventas Trimestrales</h3>
+                        <div class="chart-container"><canvas id="chartP3"></canvas></div>
+                        <p class="status" id="statusP3">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras apiladas que muestra ventas por trimestre y categoría, cargado de Salida_ventas_trimestre.txt.</p>
+                    </div>
+
+                    <!-- P6 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P6: Ingresos por Categoría</h3>
+                        <div class="chart-container"><canvas id="chartP6"></canvas></div>
+                        <p class="status" id="statusP6">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras que muestra ingresos totales por categoría, cargado de analisis_ventas.json.</p>
+                    </div>
+
+                    <!-- P8 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P8: Ventas por Producto</h3>
+                        <div class="chart-container"><canvas id="chartP8"></canvas></div>
+                        <p class="status" id="statusP8">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras que muestra ventas por producto, cargado de ventas_por_producto.csv.</p>
+                    </div>
+
+                    <!-- P9 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P9: Ventas por Región</h3>
+                        <div class="chart-container"><canvas id="chartP9"></canvas></div>
+                        <p class="status" id="statusP9">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras apiladas que muestra ventas por región y producto, cargado de consulta5.csv.</p>
+                    </div>
+
+                    <!-- P10 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P10: Importe por Ciudad</h3>
+                        <div class="chart-container"><canvas id="chartP10"></canvas></div>
+                        <p class="status" id="statusP10">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de barras que muestra importe total por ciudad, cargado de ventas_olap.csv.</p>
+                    </div>
+
+                    <!-- P11 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-4 text-center">P11: Productos por Categoría</h3>
+                        <div class="chart-container"><canvas id="chartP11"></canvas></div>
+                        <p class="status" id="statusP11">Cargando datos...</p>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Gráfico de pie que muestra conteo de productos por categoría, cargado de Consulta1.csv.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Página de Créditos y Datos Personales de los Integrantes -->
+        <section id="equipo" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Créditos y Datos Personales del Equipo</h2>
+                    <p class="mt-3 text-gray-600 max-w-3xl mx-auto">Reconocimiento al trabajo colaborativo y contacto directo con los integrantes del proyecto.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- David -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <img src="images/david.jfif" alt="David Oporta" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4" onerror="this.src='https://via.placeholder.com/128?text=David'">
+                        <h3 class="text-xl font-bold">David Oporta</h3>
+                        <p class="text-gray-500 mb-2">Líder del Proyecto</p>
+                        <p class="text-gray-600 text-sm mb-4">Responsable de la arquitectura general, integración de Pentaho con bases de datos, diseño del data warehouse y coordinación del equipo.</p>
+                        <div class="flex justify-center space-x-3 text-blue-600">
+                            <a href="https://www.facebook.com/luisdavid.oportareyes" target="_blank" title="Facebook"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="https://www.instagram.com/ldavid_or/" target="_blank" title="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="https://wa.me/50557994806" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp text-xl"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Heidy -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <img src="images/heidy.jfif" alt="Heidy Luna" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4" onerror="this.src='https://via.placeholder.com/128?text=Heidy'">
+                        <h3 class="text-xl font-bold">Heidy Luna</h3>
+                        <p class="text-gray-500 mb-2">Analista de Datos</p>
+                        <p class="text-gray-600 text-sm mb-4">Diseño y desarrollo de cubos OLAP, modelado multidimensional y consultas MDX para análisis avanzado.</p>
+                        <div class="flex justify-center space-x-3 text-blue-600">
+                            <a href="https://www.facebook.com/profile.php?id=100073842436306" target="_blank" title="Facebook"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="https://www.instagram.com/heid_dydy/" target="_blank" title="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="https://wa.me/50582878481" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp text-xl"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Iris -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <img src="images/iris.jfif" alt="Iris Ortega" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4" onerror="this.src='https://via.placeholder.com/128?text=Iris'">
+                        <h3 class="text-xl font-bold">Iris Ortega</h3>
+                        <p class="text-gray-500 mb-2">Desarrolladora ETL</p>
+                        <p class="text-gray-600 text-sm mb-4">Implementación de transformaciones complejas en Pentaho Data Integration (PDI), limpieza y enriquecimiento de datos.</p>
+                        <div class="flex justify-center space-x-3 text-blue-600">
+                            <a href="https://www.facebook.com/iris.ortega.94801" target="_blank" title="Facebook"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="https://www.instagram.com/_thyiris/" target="_blank" title="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="https://wa.me/50586494293" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp text-xl"></i></a>
+                        </div>                    </div>
+
+                    <!-- Snaijder -->
+                    <div class="text-center bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <img src="images/snaijder.jfif" alt="Snaijder Vargas" class="w-32 h-32 mx-auto rounded-full object-cover shadow-lg mb-4" onerror="this.src='https://via.placeholder.com/128?text=Snaijder'">
+                        <h3 class="text-xl font-bold">Snaijder Vargas</h3>
+                        <p class="text-gray-500 mb-2">Desarrollador Frontend</p>
+                        <p class="text-gray-600 text-sm mb-4">Diseño y desarrollo de la interfaz web, integración de gráficos dinámicos con Chart.js y optimización de la experiencia de usuario.</p>
+                        <div class="flex justify-center space-x-3 text-blue-600">
+                            <a href="https://www.facebook.com/snaijder.vargas.2025" target="_blank" title="Facebook"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="https://www.instagram.com/snaijder_v/" target="_blank" title="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="https://wa.me/50558426556" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp text-xl"></i></a>
+                        </div>                    </div>
+                </div>
+
+                <!-- Agradecimientos y Referencias -->
+                <div class="mt-16 bg-blue-50 p-8 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-bold mb-6 text-center">Agradecimientos y Referencias</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Agradecimientos</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>A nuestro profesor por su guía y apoyo durante el curso.</li>
+                                <li>A la comunidad de Pentaho por sus recursos y documentación.</li>
+                                <li>A Chart.js y PapaParse por facilitar la visualización dinámica.</li>
+                                <li>A nuestros compañeros por el intercambio de ideas y colaboración.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3">Referencias Utilizadas</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2 text-sm">
+                                <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-platform.html" target="_blank" class="text-blue-600 hover:underline">Pentaho Official Documentation</a></li>
+                                <li><a href="https://www.chartjs.org/docs/latest/" target="_blank" class="text-blue-600 hover:underline">Chart.js Documentation</a></li>
+                                <li><a href="https://github.com/mholt/PapaParse" target="_blank" class="text-blue-600 hover:underline">PapaParse GitHub</a></li>
+                                <li><a href="https://tailwindcss.com/docs" target="_blank" class="text-blue-600 hover:underline">Tailwind CSS Documentation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ANEXOS + METODOLOGÍA DE DESARROLLO -->
+        <section id="anexos" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Anexos y Metodología de Desarrollo</h2>
+
+                <!-- METODOLOGÍA DE DESARROLLO -->
+                <div class="bg-white p-8 rounded-xl shadow-lg mb-12">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600">Metodología de Desarrollo</h3>
+
+                    <!-- Herramientas Utilizadas -->
+                    <div class="mb-10">
+                        <h4 class="text-xl font-semibold mb-4 flex items-center">
+                            <span class="step-number mr-3">1</span> Herramientas Utilizadas
+                        </h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-cogs text-blue-600 text-xl mt-1"></i>
+                                <div>
+                                    <strong>Pentaho Data Integration (PDI)</strong>
+                                    <p class="text-sm text-gray-600">ETL, transformaciones (.ktr), trabajos (.kjb), cubos OLAP.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fab fa-github text-blue-600 text-xl mt-1"></i>
+                                <div>
+                                    <strong>GitHub</strong>
+                                    <p class="text-sm text-gray-600">Control de versiones, colaboración, rama <code>master</code>.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-code text-blue-600 text-xl mt-1"></i>
+                                <div>
+                                    <strong>HTML, CSS (Tailwind), JavaScript</strong>
+                                    <p class="text-sm text-gray-600">Sitio web responsivo, gráficos con Chart.js.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-terminal text-blue-600 text-xl mt-1"></i>
+                                <div>
+                                    <strong>Gemini CLI</strong>
+                                    <p class="text-sm text-gray-600">Generación rápida de código con IA (estructura HTML, JS).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Procesos de Creación y Prueba de Cubos OLAP -->
+                    <div class="mb-10">
+                        <h4 class="text-xl font-semibold mb-4 flex items-center">
+                            <span class="step-number mr-3">2</span> Procesos de Creación y Prueba de Cubos OLAP
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="step-number mr-3">A</div>
+                                <div>
+                                    <strong>Diseño del Esquema Estrella</strong>
+                                    <p class="text-sm text-gray-600">Tablas de hechos y dimensiones normalizadas en MySQL.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="step-number mr-3">B</div>
+                                <div>
+                                    <strong>Pentaho Schema Workbench</strong>
+                                    <p class="text-sm text-gray-600">Definición de dimensiones (tiempo, producto), medidas (ventas), jerarquías.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="step-number mr-3">C</div>
+                                <div>
+                                    <strong>Publicación y Pruebas</strong>
+                                    <p class="text-sm text-gray-600">Carga en Pentaho Server, pruebas con MDX en Analyzer.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desarrollo del Sitio Web -->
+                    <div class="mb-10">
+                        <h4 class="text-xl font-semibold mb-4 flex items-center">
+                            <span class="step-number mr-3">3</span> Desarrollo del Sitio Web
+                        </h4>
+                        <div class="space-y-4">
+                            <p><strong>Diseño:</strong> Prototipo en Figma → Responsive, minimalista, navegación clara.</p>
+                            <p><strong>Desarrollo con Gemini CLI:</strong></p>
+                            <div class="code-block">
+                                <code>gemini generate "crea una página HTML con Tailwind, Chart.js y menú responsive para proyecto BI"</code>
+                            </div>
+                            <p class="mt-2"><strong>Iteraciones:</strong> Refinamiento manual de estructura, integración de gráficos, pruebas en móvil.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANEXOS -->
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600">Anexos</h3>
+
+                    <!-- Enlaces Directos -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-3">Enlaces Directos al Repositorio GitHub</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="https://github.com/compusergrupo-tech/Bases-de-datos-anal-ticas/tree/master" target="_blank" class="text-blue-600 hover:underline flex items-center"><i class="fab fa-github mr-2"></i> Rama principal (master)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Código Fuente Relevante -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-3">Código Fuente Relevante</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <strong>JS: Carga de P4</strong>
+                                <div class="code-block text-xs">
+                                    <code>loadChart('chartP4', 'salida.xls.csv', data => { ... });</code>
+                                </div>
+                            </div>
+                            <div>
+                                <strong>HTML: Estructura del Gráfico</strong>
+                                <div class="code-block text-xs">
+                                    <code>&lt;canvas id="chartP4"&gt;&lt;/canvas&gt;</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>© 2025 Proyecto BI - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carga de JS -->
+    <script src="js/charts.js" defer></script>
+    <script>
+        // Menú móvil
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', !expanded);
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

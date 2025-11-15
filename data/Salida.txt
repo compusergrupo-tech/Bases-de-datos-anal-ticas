@@ -1,0 +1,10 @@
+Computadora	1	1200	1200
+Mouse	2	25	50
+Teclado	1	30	30
+Monitor	1	150	150
+Impresora	1	50	50
+Cámara	3	20	60
+USB	1	200	200
+Disco Duro	1	80	80
+Altavoz	1	250	250
+Cargador	2	40	80
